@@ -1,38 +1,1143 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>AXO ID System</title>
-    <style>
-        body { font-family: Arial; background:#111; color:#eee; padding:20px; }
-        button { margin:5px; padding:10px 20px; font-size:16px; }
-        #id-info { margin-top:20px; font-size:20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IKI1UC · POOL · MASTER‑reFINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-secondary: #0e141c;
+      --bg-card: #131a24;
+      --border-color: #1e2a3a;
+      --text-primary: #e8edf5;
+      --text-secondary: #9aa8c0;
+      --text-muted: #5a6a7e;
+      --gold: #ffd700;
+      --blue: #4b7cf7;
+      --green: #2ed98c;
+      --red: #f25a6a;
+      --purple: #a78bfa;
+      --cyan: #4dd0e1;
+      --shadow: 0 8px 32px rgba(0,0,0,0.7);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1500px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      padding: 24px 28px 32px;
+    }
+
+    .header {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; margin-bottom: 24px; gap: 12px;
+    }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-left .logo {
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: #000;
+      box-shadow: 0 0 24px rgba(255,215,0,0.25);
+    }
+    .header-left h1 {
+      font-weight: 700; font-size: 24px; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--gold), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-left h1 small {
+      font-weight: 400; -webkit-text-fill-color: var(--text-muted);
+      font-size: 14px; margin-left: 6px;
+    }
+
+    .steady-line {
+      display: flex; flex-wrap: wrap;
+      align-items: center;
+      gap: 20px 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      margin-bottom: 24px;
+    }
+    .steady-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .steady-item .value { font-weight: 700; color: var(--text-primary); }
+    .steady-item .value.gold { color: var(--gold); }
+    .steady-item .value.cyan { color: var(--cyan); }
+    .steady-item .value.purple { color: var(--purple); }
+    .badge-mode {
+      background: rgba(255,215,0,0.12);
+      border: 1px solid rgba(255,215,0,0.25);
+      padding: 2px 14px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .stat-card .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .stat-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .stat-card .value.gold { color: var(--gold); }
+    .stat-card .value.blue { color: var(--blue); }
+    .stat-card .value.purple { color: var(--purple); }
+    .stat-card .value.green { color: var(--green); }
+    .stat-card .value.cyan { color: var(--cyan); }
+
+    .pipeline-flow {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .pipeline-flow .title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pipeline-flow .title i { color: var(--gold); }
+    .pipeline-stages {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      min-width: fit-content;
+    }
+    .stage-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+      transition: var(--transition);
+      opacity: 0.5;
+      filter: grayscale(0.5);
+    }
+    .stage-node.active { opacity: 1; filter: grayscale(0); }
+    .stage-node.disabled { opacity: 0.2; pointer-events: none; }
+    .node-ring {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+    }
+    .node-ring .gear { font-size: 28px; transition: transform 0.3s; }
+    .stage-node.running .node-ring .gear {
+      animation: spin-gear 1.6s cubic-bezier(0.4,0,0.2,1) infinite;
+    }
+    @keyframes spin-gear {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    .node-ring .status-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      transition: var(--transition);
+    }
+    .stage-node.running .node-ring .status-ring {
+      border-color: var(--gold);
+      border-top-color: transparent;
+      animation: spin-ring 0.9s linear infinite;
+      box-shadow: 0 0 28px rgba(255,215,0,0.3);
+    }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
+    .stage-node.success .node-ring {
+      border-color: var(--green);
+      background: rgba(46,217,140,0.12);
+      color: var(--green);
+    }
+    .stage-node.running .node-ring {
+      border-color: var(--gold);
+      background: rgba(255,215,0,0.08);
+      color: var(--gold);
+    }
+    .stage-node.failed .node-ring {
+      border-color: var(--red);
+      background: rgba(242,90,106,0.12);
+      color: var(--red);
+    }
+    .node-label {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .node-sub {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .stage-connector {
+      flex: 0 0 30px;
+      height: 3px;
+      background: var(--border-color);
+      border-radius: 2px;
+      transition: var(--transition);
+      position: relative;
+      min-width: 12px;
+    }
+    .stage-connector.success { background: var(--green); box-shadow: 0 0 16px rgba(46,217,140,0.3); }
+    .stage-connector.running { background: var(--gold); box-shadow: 0 0 16px rgba(255,215,0,0.3); }
+    .stage-connector.failed { background: var(--red); }
+    .stage-connector::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .stage-connector.success::after { border-left-color: var(--green); }
+    .stage-connector.running::after { border-left-color: var(--gold); }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 820px) { .main-grid { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .panel-head h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .panel-head h3 i { color: var(--gold); }
+
+    .log-list {
+      display: flex; flex-direction: column;
+      gap: 6px;
+      max-height: 160px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .log-list::-webkit-scrollbar { width: 3px; }
+    .log-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    .log-item {
+      display: flex; align-items: flex-start;
+      gap: 8px;
+      padding: 5px 10px;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      border-left: 3px solid var(--border-color);
+      font-size: 12px;
+    }
+    .log-item .icon { font-size: 13px; flex-shrink: 0; width: 18px; text-align: center; }
+    .log-item .text { color: var(--text-secondary); line-height: 1.3; }
+    .log-item .text strong { color: var(--text-primary); }
+    .log-item .time { font-size: 10px; color: var(--text-muted); flex-shrink: 0; margin-left: auto; }
+    .log-item.success { border-left-color: var(--green); }
+    .log-item.error { border-left-color: var(--red); }
+    .log-item.warning { border-left-color: var(--gold); }
+    .log-item.info { border-left-color: var(--blue); }
+
+    #scanBox {
+      font-size: 11px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+    .scan-row {
+      display: flex; justify-content: space-between;
+      padding: 4px 0; border-bottom: 1px solid #0e1620;
+      font-size: 11px;
+    }
+    .scan-row .tid { color: var(--cyan); }
+    .scan-row .role { color: var(--text-secondary); }
+    .scan-row .fp { color: var(--text-muted); }
+    .scan-row.mismatch { background: rgba(255,60,60,0.06); }
+    .scan-row.mismatch .fp { color: var(--red); }
+
+    .id-panel {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .id-panel button {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 4px 16px;
+      border-radius: 100px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .id-panel button:hover { border-color: var(--gold); color: #fff; }
+    .id-panel button.active { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.08); }
+    #idDisplay {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--text-secondary);
+      max-height: 80px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .sync-bar {
+      display: flex; flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      margin-bottom: 16px;
+    }
+    .sync-bar input {
+      flex: 1;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-family: inherit;
+      min-width: 120px;
+    }
+    .sync-bar input::placeholder { color: var(--text-muted); }
+    .sync-bar button {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .sync-bar button:hover { border-color: var(--gold); color: #fff; }
+    .sync-bar button.sync { border-color: rgba(179,136,255,0.2); color: var(--purple); }
+    .sync-bar button.sync:hover { background: rgba(179,136,255,0.1); }
+
+    .trigger-area {
+      display: flex; flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .btn-primary {
+      background: var(--gold);
+      border: none;
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 30px;
+      border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 24px rgba(255,215,0,0.25);
+      font-family: inherit;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(255,215,0,0.4); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: #fff; }
+
+    @media (max-width: 600px) {
+      .container { padding: 14px; }
+      .header-left h1 { font-size: 18px; }
+      .stage-node { min-width: 70px; }
+      .node-ring { width: 48px; height: 48px; font-size: 18px; }
+      .node-ring .gear { font-size: 20px; }
+      .steady-line { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
-
 <body>
-    <h1>AXO ID System – Online</h1>
 
-    <button onclick="showID('koop')">KOOP ID</button>
-    <button onclick="showID('neutral')">NEUTRAL ID</button>
-    <button onclick="showID('pook')">POOK ID</button>
+<div class="container">
 
-    <div id="id-info">Wähle eine ID oben.</div>
+  <header class="header">
+    <div class="header-left">
+      <div class="logo"><i class="fas fa-database"></i></div>
+      <h1>IKI1UC · POOL <small>MASTER‑reFINAL · Φ∞(REAL)</small></h1>
+    </div>
+  </header>
 
-    <script src="IDkoop.js"></script>
-    <script src="IDneutral.js"></script>
-    <script src="IDpook.js"></script>
+  <!-- STEADY-LINE -->
+  <div class="steady-line">
+    <div class="steady-item">
+      <i class="fas fa-bullseye" style="color:var(--gold);"></i>
+      Fixpunkt: <span class="value gold" id="fixDisplay">0.763</span>
+    </div>
+    <div class="steady-item">
+      <i class="fas fa-wave-square" style="color:var(--cyan);"></i>
+      Orbit‑Modus: <span class="badge-mode" id="modeDisplay">OCTA</span>
+    </div>
+    <div class="steady-item">
+      <i class="fas fa-rotate" style="color:var(--purple);"></i>
+      STATE: <span class="value purple" id="stateDisplay">STABIL</span>
+    </div>
+    <div class="steady-item">
+      <i class="fas fa-clock" style="color:var(--text-muted);"></i>
+      <span id="timestamp">—</span>
+    </div>
+    <div class="steady-item" style="margin-left:auto;">
+      <span id="roleDisplay" style="font-size:11px;color:var(--text-muted);">👑 LEADER</span>
+    </div>
+  </div>
 
-    <script>
-        function showID(mode) {
-            const map = {
-                koop: ID_KOOP,
-                neutral: ID_NEUTRAL,
-                pook: ID_POOK
-            };
-            const id = map[mode];
-            document.getElementById("id-info").innerText = id.info();
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="label">Φ∞(REAL)</div><div class="value gold" id="metricPhi">–</div></div>
+    <div class="stat-card"><div class="label">🌀 Phase</div><div class="value blue" id="metricPhase">–</div></div>
+    <div class="stat-card"><div class="label">📦 POOL</div><div class="value purple" id="metricPool">–</div></div>
+    <div class="stat-card"><div class="label">✅ Fertig</div><div class="value green" id="successCount">0</div></div>
+    <div class="stat-card"><div class="label">🔄 Sync‑Count</div><div class="value cyan" id="syncCount">0</div></div>
+    <div class="stat-card"><div class="label">📡 Code‑Status</div><div class="value" id="codeStatus" style="color:var(--green);font-size:14px;">✅ bereit</div></div>
+  </div>
+
+  <!-- PIPELINE FLOW -->
+  <div class="pipeline-flow">
+    <div class="title"><i class="fas fa-arrow-right"></i> RESPO‑Pipeline · 4 → 0 → 1 → 2 → 4 → Φ∞(REAL)</div>
+    <div class="pipeline-stages" id="pipelineStages"></div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3><i class="fas fa-terminal"></i> Fusions‑Logs</h3>
+        <span style="font-size:10px;color:var(--text-muted);">Speed: <span id="speedDisplay">1.0×</span></span>
+      </div>
+      <div class="log-list" id="logList"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3><i class="fas fa-users"></i> Rollen‑Scanner</h3>
+        <span style="font-size:10px;color:var(--text-muted);" id="tabCount">1 Tab</span>
+      </div>
+      <div id="scanBox">
+        <div class="scan-row"><span class="tid">—</span><span class="role">—</span><span class="fp">—</span></div>
+      </div>
+      <div id="mismatchLog" style="font-size:10px;color:var(--red);max-height:40px;overflow:auto;margin-top:6px;"></div>
+    </div>
+  </div>
+
+  <!-- ID-PANEL + SYNC -->
+  <div class="panel" style="margin-bottom:16px;">
+    <div class="panel-head">
+      <h3><i class="fas fa-id-card"></i> AXO‑IDs · POOL</h3>
+      <span style="font-size:10px;color:var(--text-muted);">Quelle: POOL</span>
+    </div>
+    <div class="id-panel">
+      <button id="btnKoop" class="active">KOOP</button>
+      <button id="btnNeutral">NEUTRAL</button>
+      <button id="btnPook">POOK</button>
+    </div>
+    <div id="idDisplay">Wähle eine ID oben.</div>
+  </div>
+
+  <!-- SYNC-BAR -->
+  <div class="sync-bar">
+    <i class="fas fa-broadcast" style="color:var(--purple);"></i>
+    <input type="text" id="syncInput" placeholder="Nachricht an alle Module …" value="sync:pool">
+    <button class="sync" id="btnSync">🔄 SYNC</button>
+    <button id="btnBroadcast">📢 BC</button>
+    <button id="btnReset">⟲ Reset</button>
+  </div>
+
+  <!-- TRIGGER -->
+  <div class="trigger-area">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn-secondary" id="btnP4">P4 · start</button>
+      <button class="btn-secondary" id="btnP0">P0 · wake</button>
+      <button class="btn-secondary" id="btnP1">P1 · melt</button>
+      <button class="btn-secondary" id="btnP2">P2 · merge</button>
+      <button class="btn-secondary" id="btnPe">Pe · finalize</button>
+    </div>
+    <button class="btn-primary" id="btnTrigger"><i class="fas fa-play"></i> Pipeline Φ∞(REAL)</button>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+/* ================================================================
+   IKI1UC · POOL · MASTER‑reFINAL
+   ALLES in einer Datei – POOL als zentrale Datenquelle.
+   ================================================================ */
+
+  // ─── POOL – DER GLOBALE DATENPOOL ─────────────────────────────
+  const POOL = {
+    // Kernpools
+    Q: {
+      qualität: 0.82,
+      richtung: "vorwärts",
+      länge: 47
+    },
+    Vektor: {
+      ABC: "A-3-9-81",
+      orbitLink: "OCTA",
+      tmp81: 0.763
+    },
+    NC: {
+      nc: "aktiv",
+      hdfPath: "/pool/nc/data",
+      cacheUpdate: Date.now()
+    },
+    // AXO‑IDs
+    IDS: {
+      KOOP: {
+        id: "KOOP-001",
+        name: "Kooperation",
+        status: "stabil",
+        verbindung: "aktiv",
+        info: function() {
+          return `KOOP · ID: ${this.id} · ${this.name} · Status: ${this.status} · Verbindung: ${this.verbindung}`;
         }
-    </script>
+      },
+      NEUTRAL: {
+        id: "NEUTRAL-001",
+        name: "Balance",
+        status: "ausgeglichen",
+        mitte: 0.5,
+        info: function() {
+          return `NEUTRAL · ID: ${this.id} · ${this.name} · Status: ${this.status} · Mitte: ${this.mitte}`;
+        }
+      },
+      POOK: {
+        id: "POOK-001",
+        name: "Quelle",
+        status: "aktiv",
+        anker: "POOL",
+        info: function() {
+          return `POOK · ID: ${this.id} · ${this.name} · Status: ${this.status} · Anker: ${this.anker}`;
+        }
+      }
+    },
+    // POOL‑Info
+    info: function() {
+      return `POOL · Q: ${this.Q.qualität} · Vektor: ${this.Vektor.ABC} · NC: ${this.NC.nc}`;
+    }
+  };
+
+  // ─── PIPELINE‑DEFINITION ──────────────────────────────────────
+  const PIPELINE_ORDER = ['P4','P0','P1','P2','Pe'];
+  const PIPELINE_MODULES = {
+    P4: { id: "P4-start", action: "Initialisierung", icon: "fa-play" },
+    P0: { id: "P0-wake", action: "Aktivierung", icon: "fa-bolt" },
+    P1: { id: "P1-melt", action: "Transformation", icon: "fa-fire" },
+    P2: { id: "P2-merge", action: "Zusammenführung", icon: "fa-code-merge" },
+    Pe: { id: "Pe-finalize", action: "Abschluss", icon: "fa-flag-checkered" }
+  };
+
+  // ─── STATE ──────────────────────────────────────────────────────
+  const state = {
+    isRunning: false,
+    status: PIPELINE_ORDER.map(() => 'pending'),
+    results: PIPELINE_ORDER.map(() => null),
+    logs: [],
+    fix: POOL.Vektor.tmp81,
+    modeOrbit: POOL.Vektor.orbitLink,
+    stateOrbit: 'STABIL',
+    tabId: Math.random().toString(36).slice(2, 6).toUpperCase(),
+    isLeader: false,
+    knownTabs: new Map(),
+    syncCount: 0,
+    coreData: null,
+    phiResult: null,
+    currentID: 'KOOP'
+  };
+
+  // ─── DOM-REFS ──────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const stagesEl = $('pipelineStages');
+  const logEl = $('logList');
+  const scanBox = $('scanBox');
+  const mismatchLog = $('mismatchLog');
+  const triggerBtn = $('btnTrigger');
+  const idDisplay = $('idDisplay');
+
+  // ─── CODE‑FINGERPRINT ──────────────────────────────────────────
+  function computeFingerprint() {
+    const s = 'pool-v1' + JSON.stringify(PIPELINE_ORDER) + POOL.Q.qualität;
+    let h = 5381;
+    for (let i=0; i<s.length; i++) h = ((h*33) ^ s.charCodeAt(i)) >>> 0;
+    return h.toString(16);
+  }
+  const ownFingerprint = computeFingerprint();
+
+  // ─── LEADER‑ELECTION ────────────────────────────────────────────
+  const LEADER_KEY = 'pool-leader';
+  setInterval(() => {
+    const now = Date.now();
+    const raw = localStorage.getItem(LEADER_KEY);
+    const last = raw ? Number(raw) : 0;
+    if (state.isLeader) {
+      localStorage.setItem(LEADER_KEY, String(now));
+    } else if (now - last > 3000) {
+      localStorage.setItem(LEADER_KEY, String(now));
+      state.isLeader = true;
+      log('👑 Leader übernommen', 'info');
+      updateRoleUI();
+    }
+  }, 1000);
+
+  // ─── BROADCASTCHANNEL ───────────────────────────────────────────
+  let bc = null;
+  try {
+    bc = new BroadcastChannel('pool');
+    bc.onmessage = (e) => {
+      const data = e.data;
+      if (!data) return;
+      if (data.type === 'fix') {
+        state.fix = data.fix;
+        state.modeOrbit = data.mode || getModeFromFix(data.fix);
+        state.stateOrbit = data.state || 'STABIL';
+        updateSteadyLine();
+        updateSpeed();
+      }
+      if (data.type === 'presence') handlePresence(data);
+      if (data.type === 'sync') {
+        $('syncInput').value = data.payload || '';
+        log(`📨 Empfangen: ${data.payload}`, 'info');
+        state.syncCount++;
+        $('syncCount').textContent = state.syncCount;
+      }
+      if (data.type === 'id') {
+        state.currentID = data.id;
+        updateIDDisplay();
+      }
+    };
+  } catch (_) {}
+
+  function broadcast(msg) { if(bc) try{bc.postMessage(msg);}catch(_){} }
+
+  // ─── FIX → MODE ──────────────────────────────────────────────────
+  function getModeFromFix(fix) {
+    if (fix < 0.33) return 'IQQ';
+    if (fix < 0.66) return 'NC';
+    if (fix < 0.88) return 'OCTA';
+    return 'A81';
+  }
+
+  // ─── CORE‑SCAN (mit POOL) ──────────────────────────────────────
+  function coreScan() {
+    return {
+      pool: POOL,
+      respo: { count: 360 },
+      nc: { phi: 1.222, phase: state.modeOrbit },
+      fix: state.fix,
+      mode: state.modeOrbit,
+      timestamp: Date.now()
+    };
+  }
+
+  // ─── GHOST‑SIM ──────────────────────────────────────────────────
+  function ghostSim() {
+    state.fix += (Math.random() - 0.48) * 0.015;
+    state.fix = Math.min(0.95, Math.max(0.15, state.fix));
+    state.modeOrbit = getModeFromFix(state.fix);
+    state.stateOrbit = state.fix > 0.7 ? 'STABIL' : state.fix > 0.4 ? 'MODERAT' : 'LOW';
+    // POOL synchron halten
+    POOL.Vektor.tmp81 = state.fix;
+    POOL.Vektor.orbitLink = state.modeOrbit;
+    POOL.Q.qualität = 0.5 + state.fix * 0.4;
+    updateSteadyLine();
+    updateSpeed();
+    broadcast({ type: 'fix', fix: state.fix, mode: state.modeOrbit, state: state.stateOrbit });
+    const core = coreScan();
+    $('metricPhi').textContent = core.nc.phi.toFixed(3);
+    $('metricPhase').textContent = core.nc.phase;
+    $('metricPool').textContent = POOL.Q.qualität.toFixed(2);
+  }
+  setInterval(ghostSim, 4000);
+  setTimeout(ghostSim, 300);
+
+  // ─── UPDATE FUNCTIONS ───────────────────────────────────────────
+  function updateSteadyLine() {
+    $('fixDisplay').textContent = state.fix.toFixed(3);
+    $('modeDisplay').textContent = state.modeOrbit;
+    $('stateDisplay').textContent = state.stateOrbit;
+  }
+
+  function updateSpeed() {
+    const speed = (0.5 + state.fix * 1.5).toFixed(1);
+    $('speedDisplay').textContent = speed + '×';
+  }
+
+  function updateRoleUI() {
+    const el = $('roleDisplay');
+    el.textContent = state.isLeader ? '👑 LEADER' : '👤 FOLLOWER';
+  }
+
+  // ─── ID-DISPLAY ──────────────────────────────────────────────────
+  function updateIDDisplay() {
+    const id = POOL.IDS[state.currentID];
+    if (id) {
+      idDisplay.textContent = id.info();
+    } else {
+      idDisplay.textContent = '⚠️ ID nicht gefunden';
+    }
+    // Button aktivieren
+    document.querySelectorAll('.id-panel button').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('btn' + state.currentID);
+    if (btn) btn.classList.add('active');
+  }
+
+  // ─── PRESENCE / SCANNER ─────────────────────────────────────────
+  function broadcastPresence() {
+    broadcast({
+      type: 'presence',
+      tabId: state.tabId,
+      role: state.isLeader ? 'LEADER' : 'FOLLOWER',
+      fp: ownFingerprint,
+      ts: Date.now()
+    });
+  }
+  setInterval(broadcastPresence, 2500);
+
+  function handlePresence(data) {
+    const prev = state.knownTabs.get(data.tabId);
+    const mismatch = data.fp !== ownFingerprint;
+    if ((!prev || !prev.mismatch) && mismatch) {
+      mismatchLog.innerHTML += `<div>⚠️ Code‑Mismatch → Tab ${data.tabId}</div>`;
+      mismatchLog.scrollTop = mismatchLog.scrollHeight;
+      log(`⚠️ Code‑Mismatch → Tab ${data.tabId}`, 'warning');
+      $('codeStatus').textContent = '⚠️ Mismatch';
+      $('codeStatus').style.color = 'var(--red)';
+    }
+    if (prev && prev.role !== data.role) {
+      log(`🔍 Rollenwechsel → ${data.tabId}: ${prev.role} → ${data.role}`, 'info');
+    }
+    state.knownTabs.set(data.tabId, {
+      role: data.role,
+      fp: data.fp,
+      lastSeen: Date.now(),
+      mismatch
+    });
+    renderScanner();
+  }
+
+  function renderScanner() {
+    const now = Date.now();
+    for (const [id, info] of state.knownTabs) {
+      if (now - info.lastSeen > 5000) state.knownTabs.delete(id);
+    }
+    let html = '';
+    html += `<div class="scan-row"><span class="tid">${state.tabId} (ich)</span><span class="role">${state.isLeader ? 'LEADER' : 'FOLLOWER'}</span><span class="fp">FP ${ownFingerprint}</span></div>`;
+    for (const [id, info] of state.knownTabs) {
+      const cls = info.mismatch ? ' scan-row mismatch' : '';
+      html += `<div class="scan-row${cls}"><span class="tid">${id}</span><span class="role">${info.role}</span><span class="fp">FP ${info.fp}${info.mismatch ? ' ⚠️' : ''}</span></div>`;
+    }
+    scanBox.innerHTML = html;
+    $('tabCount').textContent = (state.knownTabs.size + 1) + ' Tabs';
+    const hasMismatch = Array.from(state.knownTabs.values()).some(v => v.mismatch);
+    if (!hasMismatch && state.knownTabs.size > 0) {
+      $('codeStatus').textContent = '✅ synchron';
+      $('codeStatus').style.color = 'var(--green)';
+    } else if (hasMismatch) {
+      $('codeStatus').textContent = '⚠️ Mismatch';
+      $('codeStatus').style.color = 'var(--red)';
+    }
+  }
+  setInterval(renderScanner, 3000);
+
+  // ─── PIPELINE AUSFÜHREN ─────────────────────────────────────────
+  async function runPipeline() {
+    if (state.isRunning) return;
+    state.isRunning = true;
+    triggerBtn.disabled = true;
+    triggerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Φ∞(REAL) läuft …';
+
+    state.status = PIPELINE_ORDER.map(() => 'pending');
+    state.results = PIPELINE_ORDER.map(() => null);
+    state.logs = [];
+
+    const core = coreScan();
+    state.logs.push({
+      icon: '⚡',
+      text: `<strong>Φ∞(REAL)</strong> · Start · Fix ${state.fix.toFixed(3)} · ${state.modeOrbit}`,
+      time: getTime(),
+      type: 'info'
+    });
+    renderStages();
+    renderLogs();
+    updateTimestamp();
+
+    let currentCore = core;
+
+    for (let i = 0; i < PIPELINE_ORDER.length; i++) {
+      const id = PIPELINE_ORDER[i];
+      const mod = PIPELINE_MODULES[id];
+      state.status[i] = 'running';
+      renderStages();
+      state.logs.push({
+        icon: '⚙️',
+        text: `<strong>${mod.id}</strong> · ${mod.action} …`,
+        time: getTime(),
+        type: 'warning'
+      });
+      renderLogs();
+
+      try {
+        const result = {
+          phase: mod.id,
+          action: mod.action,
+          input: currentCore,
+          pool: POOL,
+          timestamp: Date.now()
+        };
+        state.results[i] = result;
+        state.status[i] = 'success';
+        currentCore = { ...currentCore, lastPhase: mod.id, result };
+        const str = JSON.stringify(result).slice(0, 60);
+        state.logs.push({
+          icon: '✅',
+          text: `<strong>${mod.id}</strong> · → ${str}`,
+          time: getTime(),
+          type: 'success'
+        });
+      } catch (err) {
+        state.status[i] = 'failed';
+        state.logs.push({
+          icon: '❌',
+          text: `<strong>${mod.id}</strong> · Fehler: ${err.message || err}`,
+          time: getTime(),
+          type: 'error'
+        });
+      }
+      renderStages();
+      renderLogs();
+      updateTimestamp();
+      await new Promise(r => setTimeout(r, 500 + state.fix * 200));
+    }
+
+    state.phiResult = {
+      phase: 'Φ∞(REAL)',
+      core: currentCore,
+      fix: state.fix,
+      mode: state.modeOrbit,
+      pool: POOL,
+      timestamp: Date.now()
+    };
+    state.logs.push({
+      icon: '🏁',
+      text: `<strong>Φ∞(REAL)</strong> · abgeschlossen · Fix ${state.fix.toFixed(3)}`,
+      time: getTime(),
+      type: 'success'
+    });
+    renderLogs();
+
+    $('metricPhi').textContent = currentCore.nc?.phi?.toFixed(3) ?? state.fix.toFixed(3);
+    $('metricPhase').textContent = currentCore.nc?.phase ?? state.modeOrbit;
+    $('metricPool').textContent = POOL.Q.qualität.toFixed(2);
+
+    state.isRunning = false;
+    triggerBtn.disabled = false;
+    triggerBtn.innerHTML = '<i class="fas fa-play"></i> Pipeline Φ∞(REAL)';
+    updateTimestamp();
+    $('successCount').textContent = state.status.filter(s => s === 'success').length;
+  }
+
+  // ─── MANUELLER SCHRITT ──────────────────────────────────────────
+  async function manualStep(idx) {
+    if (state.isRunning) return;
+    const id = PIPELINE_ORDER[idx];
+    const mod = PIPELINE_MODULES[id];
+    state.status = state.status.map((_, i) => i === idx ? 'running' : 'pending');
+    state.results = state.results.map(() => null);
+    state.logs = [];
+
+    const core = coreScan();
+    state.logs.push({
+      icon: '🔧',
+      text: `<strong>Manuell</strong> · ${mod.id} · ${mod.action}`,
+      time: getTime(),
+      type: 'info'
+    });
+    renderStages();
+    renderLogs();
+    updateTimestamp();
+
+    try {
+      const result = {
+        phase: mod.id,
+        action: mod.action,
+        input: core,
+        pool: POOL,
+        timestamp: Date.now()
+      };
+      state.results[idx] = result;
+      state.status[idx] = 'success';
+      const str = JSON.stringify(result).slice(0, 60);
+      state.logs.push({
+        icon: '✅',
+        text: `<strong>${mod.id}</strong> · → ${str}`,
+        time: getTime(),
+        type: 'success'
+      });
+    } catch (err) {
+      state.status[idx] = 'failed';
+      state.logs.push({
+        icon: '❌',
+        text: `<strong>${mod.id}</strong> · Fehler: ${err.message || err}`,
+        time: getTime(),
+        type: 'error'
+      });
+    }
+    renderStages();
+    renderLogs();
+    updateTimestamp();
+    $('successCount').textContent = state.status.filter(s => s === 'success').length;
+    $('metricPhi').textContent = state.fix.toFixed(3);
+    $('metricPool').textContent = POOL.Q.qualität.toFixed(2);
+  }
+
+  // ─── RENDER FUNCTIONS ───────────────────────────────────────────
+  function renderStages() {
+    let html = '';
+    state.status.forEach((status, idx) => {
+      const id = PIPELINE_ORDER[idx];
+      const mod = PIPELINE_MODULES[id];
+      const cls = status;
+      let iconHtml = `<i class="fas ${mod.icon} gear"></i>`;
+      if (status === 'running') iconHtml = `<i class="fas fa-gear gear"></i>`;
+
+      html += `
+        <div class="stage-node ${cls} active">
+          <div class="node-ring">
+            <span class="status-ring"></span>
+            ${iconHtml}
+          </div>
+          <div class="node-label">${mod.id}</div>
+          <div class="node-sub">${
+            status === 'running' ? '⚙️ läuft …' :
+            status === 'success' ? '✓ fertig' :
+            status === 'failed' ? '✗ fehler' : '⏳ bereit'
+          }</div>
+        </div>
+      `;
+      if (idx < PIPELINE_ORDER.length - 1) {
+        const nextStatus = state.status[idx + 1];
+        let conn = '';
+        if (status === 'success' && (nextStatus === 'success' || nextStatus === 'running' || nextStatus === 'failed')) conn = 'success';
+        else if (status === 'running') conn = 'running';
+        else if (status === 'failed') conn = 'failed';
+        html += `<div class="stage-connector ${conn}"></div>`;
+      }
+    });
+    stagesEl.innerHTML = html;
+  }
+
+  function renderLogs() {
+    let html = '';
+    state.logs.forEach(log => {
+      html += `<div class="log-item ${log.type}"><span class="icon">${log.icon}</span><span class="text">${log.text}</span><span class="time">${log.time}</span></div>`;
+    });
+    logEl.innerHTML = html;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function getTime() {
+    const now = new Date();
+    return String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  }
+  function updateTimestamp() { $('timestamp').textContent = getTime(); }
+
+  function log(msg, type='info') {
+    state.logs.push({ icon: type==='warning'?'⚠️':type==='error'?'❌':type==='success'?'✅':'ℹ️', text: msg, time: getTime(), type });
+    renderLogs();
+  }
+
+  // ─── EVENTS ──────────────────────────────────────────────────────
+  triggerBtn.addEventListener('click', runPipeline);
+
+  $('btnReset').addEventListener('click', () => {
+    if (state.isRunning) return;
+    state.status = PIPELINE_ORDER.map(() => 'pending');
+    state.results = PIPELINE_ORDER.map(() => null);
+    state.logs = [];
+    state.logs.push({ icon: '🔄', text: 'Pipeline zurückgesetzt', time: getTime(), type: 'info' });
+    renderStages();
+    renderLogs();
+    updateTimestamp();
+    $('successCount').textContent = '0';
+  });
+
+  $('btnSync').addEventListener('click', () => {
+    const msg = $('syncInput').value.trim() || 'sync:pool';
+    state.syncCount++;
+    $('syncCount').textContent = state.syncCount;
+    broadcast({ type: 'sync', payload: msg, from: state.tabId });
+    log(`⬆ SYNC: ${msg}`, 'info');
+  });
+
+  $('btnBroadcast').addEventListener('click', () => {
+    const msg = $('syncInput').value.trim() || 'broadcast:pool';
+    state.syncCount++;
+    $('syncCount').textContent = state.syncCount;
+    broadcast({ type: 'sync', payload: msg, from: state.tabId });
+    document.querySelectorAll('iframe').forEach(f => {
+      try { f.contentWindow.postMessage({ type: 'sync', payload: msg }, '*'); } catch(_) {}
+    });
+    log(`📢 BC: ${msg}`, 'info');
+  });
+
+  $('syncInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('btnSync').click(); });
+
+  $('btnP4').addEventListener('click', () => manualStep(0));
+  $('btnP0').addEventListener('click', () => manualStep(1));
+  $('btnP1').addEventListener('click', () => manualStep(2));
+  $('btnP2').addEventListener('click', () => manualStep(3));
+  $('btnPe').addEventListener('click', () => manualStep(4));
+
+  // ID‑Buttons
+  $('btnKoop').addEventListener('click', () => {
+    state.currentID = 'KOOP';
+    updateIDDisplay();
+    broadcast({ type: 'id', id: 'KOOP' });
+  });
+  $('btnNeutral').addEventListener('click', () => {
+    state.currentID = 'NEUTRAL';
+    updateIDDisplay();
+    broadcast({ type: 'id', id: 'NEUTRAL' });
+  });
+  $('btnPook').addEventListener('click', () => {
+    state.currentID = 'POOK';
+    updateIDDisplay();
+    broadcast({ type: 'id', id: 'POOK' });
+  });
+
+  // ─── TASTATUR ────────────────────────────────────────────────────
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target === $('syncInput')) $('btnSync').click();
+    if (e.key === '1') $('btnP4').click();
+    if (e.key === '2') $('btnP0').click();
+    if (e.key === '3') $('btnP1').click();
+    if (e.key === '4') $('btnP2').click();
+    if (e.key === '5') $('btnPe').click();
+    if (e.key === 'k' || e.key === 'K') $('btnKoop').click();
+    if (e.key === 'n' || e.key === 'N') $('btnNeutral').click();
+    if (e.key === 'p' || e.key === 'P') $('btnPook').click();
+    if (e.key === ' ' && e.target === document.body) {
+      e.preventDefault();
+      triggerBtn.click();
+    }
+  });
+
+  // ─── INIT ────────────────────────────────────────────────────────
+  function init() {
+    const core = coreScan();
+    state.logs.push({ icon: '💡', text: 'POOL · MASTER‑reFINAL · geladen', time: getTime(), type: 'info' });
+    state.logs.push({ icon: '🔑', text: `Tab ${state.tabId} · FP ${ownFingerprint}`, time: getTime(), type: 'info' });
+    state.logs.push({ icon: '📦', text: `POOL · Q: ${POOL.Q.qualität.toFixed(2)} · Vektor: ${POOL.Vektor.ABC}`, time: getTime(), type: 'info' });
+    state.logs.push({ icon: '⌨️', text: '1=P4  2=P0  3=P1  4=P2  5=Pe  k=KOOP  n=NEUTRAL  p=POOK  Leertaste=Φ∞(REAL)', time: getTime(), type: 'info' });
+    renderStages();
+    renderLogs();
+    updateTimestamp();
+    updateSteadyLine();
+    updateSpeed();
+    updateRoleUI();
+    updateIDDisplay();
+    broadcastPresence();
+    $('codeStatus').textContent = '✅ bereit';
+    $('codeStatus').style.color = 'var(--green)';
+    $('metricPhi').textContent = core.nc.phi.toFixed(3);
+    $('metricPhase').textContent = core.nc.phase;
+    $('metricPool').textContent = POOL.Q.qualität.toFixed(2);
+  }
+  init();
+</script>
 </body>
 </html>
